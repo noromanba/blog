@@ -1,0 +1,22 @@
+<ul class="social list-inline text-center">
+	<li>
+		<a href="//twitter.com/share?url={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}&text={% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}&via=midchildan&related=midchildan" target="_blank">
+      <i class="fa fa-twitter fa-2x"></i>
+		</a>
+	</li>
+	<li>
+		<a href="//www.facebook.com/share.php?u={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" onclick="javascipt:window.open(this.href,'FBwindow','width=650,height=450,menubar=no,toolbar=no,scrollbars=yes');return false;">
+      <i class="fa fa-facebook fa-2x"></i>
+		</a>
+	</li>
+	<li>
+		<a href="//plus.google.com/share?url={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" onclick="javascipt:window.open(this.href,'','menubar=no,toolbar=no,resizable=yes,scrollbar=yes,height=600,width=600');return false;">
+      <i class="fa fa-google-plus fa-2x"></i>
+		</a>
+	</li>
+	<li>
+		<a href="//b.hatena.ne.jp/add?url={{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" target="_blank">
+      <i class="fa fa-hatebu fa-2x"></i>
+		</a>
+	</li>
+</ul>

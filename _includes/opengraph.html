@@ -1,0 +1,15 @@
+{% if page.title %}
+<meta property="og:title" content="{{ page.title }}">
+{% endif %}
+<meta property="og:site_title" content="{{ site.title }}">
+{% if page.type == 'post' %}
+<meta property="og:type" content="article">
+{% else %}
+<meta property="og:type" content="blog">
+{% endif %}
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}">
+<meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+{% if page.excerpt %}
+<meta property="og:description" content="{{ page.excerpt | strip_html }}">
+{% endif %}
+<meta property="og:locale" content="ja_JP">
