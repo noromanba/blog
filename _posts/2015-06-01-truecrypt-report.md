@@ -15,14 +15,14 @@ date: 2015-06-01 01:56:00
 
 Truecryptの開発者は乱数生成器を[1998年にピーター・ガットマンが考案した仕組み](//www.usenix.org/legacy/publications/library/proceedings/sec98/full_papers/gutmann/gutmann.pdf)を元に実装してる。具体的には *エントロピー・プール* を使って[Windows Crypto API](//msdn.microsoft.com/en-us/library/ms867086.aspx)を含めたシステムのあらゆるソースから予測不能な値を集めている。Truecryptで問題なのは、ごく稀にCypto APIがきちんと初期化するのに失敗することがあるということだ。このようなことが起きれば、本来Truecryptは検知して対処しなければならない。しかし、Truecryptは構わずキーを生成し続けてしまう。
 
-{% highlight c %}
+```c
 /* CryptoAcquireContextの呼び出し */
 if (!CryptAcquireContext (&hCryptProv, NULL, NULL, PROV_RSA_FULL, 0)
 	&& !CryptAcquireContext (&hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_NEWKEYSET))
 	CryptoAPIAvailabe = FALSE;
 else
 	CryptoAPIAvailable = TRUE;
-{% endhighlight %}
+```
 
 ただし、このような失敗の可能性は非常に低いため、世界の終わりという訳では無い。また、Windows Crypto APIが仮にあなたのシステムで失敗を起こしたとしてもTruecryptはシステムポインターやマウスの動きなど、他のソースからエントロピーを獲得する。このような代替手段はあなたを守るのにおそらく十分であるが設計上問題があり、Truecryptのフォークでは確実に直すべきだ。
 

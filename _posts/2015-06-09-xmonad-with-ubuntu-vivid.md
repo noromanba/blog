@@ -36,7 +36,7 @@ Ubuntu 14.10まではxmonadのパッケージをインストールするとXMona
 これも15.04で消されたファイルの一つである。もっとも14.10ではこのファイルは存在してたが、 `gnome-setting-daemon` を `unity-settings-daemon` に変更したり `DesktopName=Unity` を追加しないと正しく動かなかったため結局 `/usr/local` 以下に似たようなファイルを置く必要があった記憶がある。
 
 以上の手順を踏んでもデスクトップが出るまで異常に時間がかかったりうまく動かなかったりした場合には `~/.xmonad/lib/XMonad/Config/Gnome.hs` に以下の内容を保存しよう:
-{% highlight haskell linenos %}
+```haskell
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
 -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ gnomeRegister = io $ do
             ,"org.gnome.SessionManager.RegisterClient"
             ,"string:xmonad"
             ,"string:"++sessionId]
-{% endhighlight %}
+```
 これは[XMonadとGnomeを連携させるためのモジュール](//xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Config-Gnome.html)だが、残念ながらxmonadのパッケージにあらかじめあるコードでは動かない。どうやら `dbus-send` の仕様が変わり、77行目が本来 `--print-reply=literal` にするべきなのが `--print-reply=string` になってるのが原因なのでオリジナルのソースからそこだけ変更してある。この修正が必要な場合は、確か `~/.xsession-errors` にdbus関連のエラーが出現するはずだから一応確認してみるのもいいかもしれない。どうやら去年の段階で[パッチが送られてる様子](//mail.haskell.org/pipermail/xmonad/2014-May/014130.html)なのでこのファイルを自分で用意する必要はそろそろなくなるだろう。
 
 # Super+Pキーコンビネーションについて
@@ -128,17 +128,17 @@ XMonadのmodキーをSuperキー(Windowsキー)に指定してる人は、Super+
 # 最後に
 XMonadのインストール方法についてついて知りたい人は[ここ](//wiki.haskell.org/Xmonad/Installing_xmonad)を見るといいだろう。XMonadとGnomeを連携させたい人は最低限次の設定を `~/.xmonad/xmonad.hs` に保存すればいい。 
 
-{% highlight haskell %}
+```haskell
 import XMonad
 import XMonad.Config.Gnome
 
 main = do
     xmonad $ gnomeConfig
-{% endhighlight %}
+```
 
 XMonadの設定についてはネットに多くの資料が存在するため、より細かい設定をしたい人は調べて欲しい。参考までに自分の設定を以下に残しておく:
 
-{% highlight haskell %}
+```haskell
 import XMonad
 import XMonad.Config.Desktop (desktopLayoutModifiers)
 import XMonad.Config.Gnome
@@ -191,7 +191,7 @@ main = do
 		, focusFollowsMouse = False }
 		`additionalKeysP`
 		[ ("M-S-q", spawn "gnome-session-quit --power-off") ]
-{% endhighlight %}
+```
 
 参考サイト:
 [Gnome Xmonad broken after upgraded to 14.10 - ask ubuntu](//askubuntu.com/questions/541327/gnome-xmonad-broken-after-upgraded-to-14-10)

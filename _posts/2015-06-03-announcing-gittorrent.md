@@ -24,7 +24,7 @@ date: 2015-06-03 13:15:00
 # レポジトリをGitTorrentで公開しよう!
 ではGitTorrentのデモに移ろう。BitTorrentで公開されたレポジトリをクローンする:
 
-{% highlight console linenos %}
+```console
 $ git clone gittorrent://github.com/cjb/recursers
 Cloning into 'recursers'...
 
@@ -36,7 +36,7 @@ Downloading git pack with infohash: 9d98510a9fee5d3f603e08dcb565f0675bd4b6a2
 Receiving objects: 100% (47/47), 11.47 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (10/10), done.
 Checking connectivity... done.
-{% endhighlight %}
+```
 
 はい、たった今BitTorrentからgitレポジトリをクローンできた。何が起きたか一行ずつ確認していこう。
 
@@ -46,10 +46,10 @@ __1-2行目:__ 実はGitにはネットワークプロトコルの拡張機構�
 
 __4-6行目:__ 次に、BitTorrent同様に分散ハッシュテーブルであるGitTorrentネットワークにコミット `5fbfea8de..` のコピーを持っている人がいないかを問い合わせる。実際持っている人がいたらその人とBitTorrentのコネクションを作る。BitTorrentの分散ハッシュテーブルの仕組みとして、 `get_nodes(hash)` という単一の操作によって次のように誰が自分の欲しいファイルを送信できるか知ることができる:
 
-{% highlight javascript %}
+```javascript
 get_nodes('5fbfea8de70ddc686dafdd24b690893f98eb9475') = 
 	[192.34.86.36:30000, ...]
-{% endhighlight %}
+```
 
 なお、標準的なトラッカー不要トレントでは欲しいファイルの内容を指定すればファイルが取得できて幸せになれる。だがLinuxカーネルのように400万コミットあるような巨大なレポジトリではコミット1つ分だけ取得しても意味はなく、残りのコミットを取得するためにさらに400万リクエスト送る必要がある。また `git pull` するたびにすべてのコミットを取得したくはない。したがって何か別のことをする必要がある。
 
@@ -76,7 +76,7 @@ Gitグラフの仕組み上ノード1は `bbbb` がグラフ上でどこにあ�
 
 2つ目の種類はミュータブルキーといって、この場合のキーは鍵ペアの公開鍵のハッシュであり、鍵ペアの所有者は署名されたアップデートをそのキーに対応した値として発行できる。アップデートには番号がついてるため、クライアントはミュータブルキーのアップデートを見つけたら自分が記録してるよりも新しい番号が割り振られてないか見て、もしそうであればアップデートがキーに対応した公開鍵によって署名されてるかも確認する。両方確認がとれて大丈夫であった場合には新しい値に更新して再配布を開始する。これには様々な使い道が考えられるが、私はレポジトリの名前と最新のレビジョンを格納するために使用した。したがって流れとしてはGitでコミットしてネットワークにプッシュし、自分のミュータブルキーが最新のコミットを反映するよう更新してやればよい。以下がこの操作を説明したコードである:
 
-{% highlight javascript %}
+```javascript
 // イミュータブルキーへのput操作
 hash(value) = put({
 	value: '何かしらのデータ'
@@ -91,13 +91,13 @@ hash(key) = put({
 
 // Get操作
 value = get(hash)
-{% endhighlight %}
+```
 
 したがって今度誰かにGitTorrentのレポジトリをクローンして欲しい場合には、github.comのURLの代わりに分散ハッシュテーブルのミュータブルキーとして使われてる私の公開鍵のハッシュを伝えれば良い。
 
 次がこのデモである:
 
-{% highlight console %}
+```console
 $ git clone gittorrent://81e24205d4bac8496d3e13282c90ead5045f09ea/recursers
 
 Cloning into 'recursers'...
@@ -118,7 +118,7 @@ Downloading git pack with infohash: 9d98510a9fee5d3f603e08dcb565f0675bd4b6a2
 Receiving objects: 100% (47/47), 11.47 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (10/10), done.
 Checking connectivity... done.
-{% endhighlight %}
+```
 
 今回のデモでは再びBitTorrent上でGitレポジトリをクローンしたが、GitHubと通信する代わりに分散ハッシュテーブルを使用して欲しいコミットがどれであるかを調べた。これで今回こそGitダウンロードの分散化を達成できた。
 
@@ -144,20 +144,20 @@ Checking connectivity... done.
 
 まとめると、私たちはGitオブジェクトのBitTorrentスウォームを作り、ユーザー名登録に取り掛かった。はじめは次のようにコマンドを打ち込んだ:
 
-{% highlight console %}
+```console
 $ git clone gittorrent://github.com/cjb/foo
-{% endhighlight %}
+```
 
 そして次のように変わり:
-{% highlight console %}
+```console
 $ git clone gittorrent://81e24205d4bac8496d3e13282c90ead5045f09ea/foo
-{% endhighlight %}
+```
 
 最終的には次のようになった:
 
-{% highlight console %}
+```console
 $ git clone gittorrent://cjb/foo
-{% endhighlight %}
+```
 
 この時点でGitHubの中心的な機能、Gitレポジトリを探してダウンロードする部分は分散化出来ただろう。
 

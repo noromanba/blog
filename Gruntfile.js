@@ -15,7 +15,8 @@ module.exports = function(grunt) {
                     paths: ["css"]
                 },
                 files: {
-                    "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less"
+                    "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less",
+                    "css/syntax.css": "less/syntax.less"
                 }
             },
             minified: {
@@ -25,7 +26,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     "css/<%= pkg.name %>.min.css": "less/<%= pkg.name %>.less",
-                    "css/syntax.min.css": "css/syntax.css",
+                    "css/syntax.min.css": "less/syntax.less",
                     "css/custom.min.css": "css/custom.css"
                 }
             }
