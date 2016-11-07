@@ -2,6 +2,7 @@
 title: "brew install mikutter"
 subtitle: "MikutterInstallBattle on macOS 2016"
 date: 2016-11-07 23:35:00
+header-img: "img/2016-11/resona.png"
 ---
 
 今日Homebrewに[mikutterのフォーミュラを追加した](//github.com/Homebrew/homebrew-core/pull/6258)。[mikutter](//mikutter.hachune.net)とはプラグイン拡張可能なツイッタークライアントであり、主に日本のLinuxユーザーに愛用されてる。Debianなどでは[mikutterのパッケージ](//packages.debian.org/ja/jessie/mikutter)が用意されていてコマンド一発でインストールすることができるが、macOSでのインストールは少し面倒な手順を踏む必要があった。そこで以前[インストールスクリプト]({% post_url 2015-10-22-mikutter-osx-plugin %})を書くなどしたがやはり面倒だからmacOSで人気のあるパッケージマネージャーの[Homebrew](//brew.sh)向けにフォーミュラを作ることにした。今回はmikutterのインストール方法とフォーミュラ作成の流れについて書く。
