@@ -149,6 +149,7 @@ $ git clone gittorrent://github.com/cjb/foo
 ```
 
 そして次のように変わり:
+
 ```console
 $ git clone gittorrent://81e24205d4bac8496d3e13282c90ead5045f09ea/foo
 ```
