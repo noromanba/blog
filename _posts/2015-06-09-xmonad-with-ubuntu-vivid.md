@@ -36,6 +36,7 @@ Ubuntu 14.10まではxmonadのパッケージをインストールするとXMona
 これも15.04で消されたファイルの一つである。もっとも14.10ではこのファイルは存在してたが、 `gnome-setting-daemon` を `unity-settings-daemon` に変更したり `DesktopName=Unity` を追加しないと正しく動かなかったため結局 `/usr/local` 以下に似たようなファイルを置く必要があった記憶がある。
 
 以上の手順を踏んでもデスクトップが出るまで異常に時間がかかったりうまく動かなかったりした場合には `~/.xmonad/lib/XMonad/Config/Gnome.hs` に以下の内容を保存しよう:
+
 ```haskell
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
@@ -120,6 +121,7 @@ gnomeRegister = io $ do
             ,"string:xmonad"
             ,"string:"++sessionId]
 ```
+
 これは[XMonadとGnomeを連携させるためのモジュール](//xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Config-Gnome.html)だが、残念ながらxmonadのパッケージにあらかじめあるコードでは動かない。どうやら `dbus-send` の仕様が変わり、77行目が本来 `--print-reply=literal` にするべきなのが `--print-reply=string` になってるのが原因なのでオリジナルのソースからそこだけ変更してある。この修正が必要な場合は、確か `~/.xsession-errors` にdbus関連のエラーが出現するはずだから一応確認してみるのもいいかもしれない。どうやら去年の段階で[パッチが送られてる様子](//mail.haskell.org/pipermail/xmonad/2014-May/014130.html)なのでこのファイルを自分で用意する必要はそろそろなくなるだろう。
 
 # Super+Pキーコンビネーションについて
